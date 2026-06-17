@@ -1,101 +1,565 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidade - MonitoraNet</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-            line-height: 1.6;
-            color: #333;
-        }
-        h1, h2 {
-            color: #0d6efd;
-        }
-        .container {
-            background: #fff;
-            padding: 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MonitoraNet – Rastreamento Veicular em Tempo Real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --night:    #0B0F1A;
+      --deep:     #111827;
+      --card:     #161D2E;
+      --border:   #1E2A40;
+      --electric: #2D7EF8;
+      --glow:     #3D8BFF;
+      --green:    #22D07A;
+      --text:     #E8EDF5;
+      --muted:    #8A96A8;
+      --white:    #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--night);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11, 15, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.2rem;
+      color: var(--white);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .nav-logo svg { color: var(--electric); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 92vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(45,126,248,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(45,126,248,0.12);
+      border: 1px solid rgba(45,126,248,0.3);
+      color: var(--electric);
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 100px;
+      margin-bottom: 2rem;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      max-width: 780px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--electric), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--electric);
+      color: var(--white);
+      font-weight: 600; font-size: 0.95rem;
+      padding: 0.85rem 2rem; border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(45,126,248,0);
+    }
+    .btn-primary:hover {
+      background: var(--glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(45,126,248,0.35);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500; font-size: 0.95rem;
+      padding: 0.85rem 2rem; border-radius: 10px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--electric); color: var(--white); }
+
+    /* ── MAP VISUAL ── */
+    .map-visual {
+      margin-top: 4rem;
+      position: relative;
+      width: 100%; max-width: 680px;
+    }
+    .map-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .map-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(45,126,248,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45,126,248,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .map-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem; position: relative; z-index: 1;
+    }
+    .map-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .map-live {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 600; color: var(--green);
+    }
+    .map-live::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); animation: pulse 1.5s infinite;
+    }
+    .vehicles-list {
+      display: flex; flex-direction: column; gap: 0.75rem;
+      position: relative; z-index: 1;
+    }
+    .vehicle-row {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem 1rem;
+    }
+    .v-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .v-icon.on  { background: rgba(34,208,122,0.12); }
+    .v-icon.off { background: rgba(138,150,168,0.1); }
+    .v-info { flex: 1; min-width: 0; }
+    .v-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+    .v-loc  { font-size: 0.78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .v-status {
+      font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.7rem;
+      border-radius: 100px; flex-shrink: 0;
+    }
+    .v-status.on  { background: rgba(34,208,122,0.12); color: var(--green); }
+    .v-status.off { background: rgba(138,150,168,0.1);  color: var(--muted); }
+
+    /* ── FEATURES ── */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--electric);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700; color: var(--white);
+      line-height: 1.15; letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--muted); font-size: 1.05rem;
+      max-width: 520px; margin-bottom: 3rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(45,126,248,0.4);
+      transform: translateY(-3px);
+    }
+    .feat-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: rgba(45,126,248,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.2rem;
+    }
+    .feature-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 2rem;
+    }
+
+    /* ── PRIVACY ── */
+    #privacidade { background: var(--deep); }
+    .privacy-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      max-width: 820px;
+    }
+    .privacy-wrap h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.4rem;
+    }
+    .privacy-date {
+      font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem;
+    }
+    .privacy-wrap h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--electric); margin: 1.75rem 0 0.5rem;
+    }
+    .privacy-wrap p, .privacy-wrap li {
+      font-size: 0.92rem; color: var(--muted); line-height: 1.75;
+    }
+    .privacy-wrap ul {
+      padding-left: 1.4rem; margin-top: 0.4rem;
+    }
+    .privacy-wrap li { margin-bottom: 0.3rem; }
+    .privacy-wrap a { color: var(--electric); }
+
+    /* ── DELETION BOX ── */
+    .deletion-box {
+      background: rgba(45,126,248,0.07);
+      border: 1px solid rgba(45,126,248,0.25);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 0.75rem;
+    }
+    .deletion-box p { color: var(--text); }
+    .deletion-box strong { color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+    footer p { font-size: 0.85rem; color: var(--muted); }
+    footer a { color: var(--electric); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 5rem 1.25rem 3rem; }
+      section { padding: 4rem 1.25rem; }
+      .privacy-wrap { padding: 2rem 1.5rem; }
+      .divider { margin: 0 1.25rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-badge::before, .map-live::before { animation: none; }
+      .btn-primary:hover, .feature-card:hover { transform: none; }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-    <h1>Política de Privacidade - MonitoraNet</h1>
 
-    <p><strong>Última atualização:</strong> 17 de junho de 2026</p>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    MonitoraNet
+  </a>
+  <ul class="nav-links">
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#privacidade">Privacidade</a></li>
+    <li><a href="#exclusao-de-dados">Exclusão de Dados</a></li>
+  </ul>
+</nav>
 
-    <h2>1. Introdução</h2>
-    <p>
-        O aplicativo MonitoraNet respeita sua privacidade e está comprometido
-        em proteger os dados pessoais de seus usuários.
-    </p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Rastreamento em tempo real</div>
+  <h1>Monitore sua frota<br /><span>onde quer que esteja</span></h1>
+  <p class="hero-sub">
+    Acompanhe cada veículo em tempo real, receba alertas de ignição, bloqueio remoto e cerca virtual — tudo no seu celular.
+  </p>
+  <div class="hero-cta">
+    <a href="#funcionalidades" class="btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      Ver funcionalidades
+    </a>
+    <a href="#privacidade" class="btn-ghost">Política de Privacidade</a>
+  </div>
 
-    <h2>2. Informações Coletadas</h2>
-    <p>
-        O aplicativo pode coletar informações necessárias para seu funcionamento,
-        incluindo:
-    </p>
-    <ul>
-        <li>Informações de autenticação fornecidas pelo usuário;</li>
-        <li>Dados técnicos do dispositivo;</li>
-        <li>Informações de localização, quando autorizadas pelo usuário;</li>
-        <li>Dados necessários para funcionalidades de monitoramento e rastreamento.</li>
-    </ul>
+  <div class="map-visual">
+    <div class="map-card">
+      <div class="map-header">
+        <span class="map-title">Painel da Frota</span>
+        <span class="map-live">Ao vivo</span>
+      </div>
+      <div class="vehicles-list">
+        <div class="vehicle-row">
+          <div class="v-icon on">🚛</div>
+          <div class="v-info">
+            <div class="v-name">Caminhão 001 – BRA-2E45</div>
+            <div class="v-loc">📍 Av. Paulista, São Paulo, SP · 72 km/h</div>
+          </div>
+          <span class="v-status on">Ligado</span>
+        </div>
+        <div class="vehicle-row">
+          <div class="v-icon on">🚐</div>
+          <div class="v-info">
+            <div class="v-name">Van 003 – BRA-8H12</div>
+            <div class="v-loc">📍 Rodovia Anhanguera, km 54 · 95 km/h</div>
+          </div>
+          <span class="v-status on">Ligado</span>
+        </div>
+        <div class="vehicle-row">
+          <div class="v-icon off">🚗</div>
+          <div class="v-info">
+            <div class="v-name">Carro 007 – BRA-5F30</div>
+            <div class="v-loc">📍 Depósito Central, Campinas, SP</div>
+          </div>
+          <span class="v-status off">Parado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h2>3. Uso das Informações</h2>
-    <p>Os dados coletados podem ser utilizados para:</p>
-    <ul>
-        <li>Fornecer os serviços do aplicativo;</li>
-        <li>Melhorar a experiência do usuário;</li>
-        <li>Garantir a segurança da plataforma;</li>
-        <li>Cumprir obrigações legais e regulatórias.</li>
-    </ul>
+<hr class="divider" />
 
-    <h2>4. Compartilhamento de Dados</h2>
-    <p>
-        O MonitoraNet não vende informações pessoais dos usuários.
-        Os dados poderão ser compartilhados apenas quando necessário para
-        prestação dos serviços ou para cumprimento de exigências legais.
-    </p>
+<!-- FEATURES -->
+<section id="funcionalidades">
+  <div class="section-inner">
+    <p class="section-eyebrow">Funcionalidades</p>
+    <h2 class="section-title">Controle total da sua frota</h2>
+    <p class="section-desc">Do rastreamento ao bloqueio remoto, o MonitoraNet cobre tudo que você precisa para gerenciar veículos com segurança.</p>
 
-    <h2>5. Armazenamento e Segurança</h2>
-    <p>
-        Adotamos medidas técnicas e administrativas para proteger os dados
-        contra acesso não autorizado, alteração, divulgação ou destruição.
-    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon">🛰️</div>
+        <h3>Rastreamento em Tempo Real</h3>
+        <p>Localização GPS precisa de cada veículo da frota, atualizada continuamente no mapa.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🔔</div>
+        <h3>Alertas de Ignição</h3>
+        <p>Notificação imediata ao ligar ou desligar o motor, com hora e local registrados.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🔒</div>
+        <h3>Bloqueio Remoto</h3>
+        <p>Bloqueie o veículo diretamente pelo app em situações de emergência ou suspeita de roubo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">📍</div>
+        <h3>Cerca Virtual</h3>
+        <p>Defina zonas geográficas e receba alertas quando um veículo entrar ou sair da área configurada.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">📊</div>
+        <h3>Histórico de Rotas</h3>
+        <p>Consulte o trajeto completo percorrido por cada veículo em qualquer período.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">📱</div>
+        <h3>App Mobile</h3>
+        <p>Interface intuitiva para Android, com acesso rápido a toda a frota na palma da mão.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h2>6. Direitos do Usuário</h2>
-    <p>
-        O usuário pode solicitar acesso, correção ou exclusão de seus dados,
-        observadas as exigências legais aplicáveis.
-    </p>
+<hr class="divider" />
 
-    <h2>7. Permissões do Aplicativo</h2>
-    <p>
-        Dependendo das funcionalidades utilizadas, o aplicativo poderá solicitar
-        permissões como acesso à localização, câmera, armazenamento ou notificações.
-        Essas permissões são utilizadas exclusivamente para fornecer os recursos
-        disponibilizados ao usuário.
-    </p>
+<!-- PRIVACY -->
+<section id="privacidade">
+  <div class="section-inner">
+    <p class="section-eyebrow">Legal</p>
+    <h2 class="section-title">Política de Privacidade</h2>
+    <p class="section-desc">Saiba como coletamos, usamos e protegemos seus dados.</p>
 
-    <h2>8. Alterações desta Política</h2>
-    <p>
-        Esta Política de Privacidade poderá ser atualizada periodicamente.
-        Recomendamos sua consulta regular.
-    </p>
+    <div class="privacy-wrap">
+      <h2>Política de Privacidade – MonitoraNet</h2>
+      <p class="privacy-date">Última atualização: junho de 2026</p>
 
-    <h2>9. Contato</h2>
-    <p>
-        Em caso de dúvidas sobre esta Política de Privacidade, entre em contato pelo e-mail:
-    </p>
+      <p>O aplicativo <strong>MonitoraNet</strong> é desenvolvido e mantido por Joaquim Moura. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e protegemos as informações dos usuários do aplicativo Android <strong>com.monitoranet</strong>. Ao utilizar o aplicativo, você concorda com as práticas descritas abaixo.</p>
 
-    <p>
-        <strong>SEU_EMAIL@DOMINIO.COM</strong>
-    </p>
-</div>
+      <h3>1. Dados Coletados</h3>
+      <p>Para prestar os serviços de rastreamento veicular, coletamos as seguintes categorias de dados:</p>
+      <ul>
+        <li><strong>Dados de conta:</strong> identificador de login (e-mail ou usuário) e senha (armazenada com hash no servidor)</li>
+        <li><strong>Dados dos veículos:</strong> placa, modelo e apelido dos veículos cadastrados na conta</li>
+        <li><strong>Dados de localização:</strong> coordenadas GPS dos rastreadores veiculares associados à conta (não a localização do dispositivo móvel do usuário)</li>
+        <li><strong>Identificador do dispositivo (FCM Token):</strong> token gerado pelo Firebase Cloud Messaging, enviado ao nosso servidor para entrega de notificações push</li>
+        <li><strong>Dados de uso:</strong> logs de eventos do app (ignição, bloqueio, alertas de cerca virtual, excesso de velocidade) com data, hora e placa do veículo</li>
+        <li><strong>Dados de pagamento:</strong> histórico de assinaturas e status de pagamento (os dados de cartão são processados exclusivamente pelo Mercado Pago, não armazenamos dados financeiros)</li>
+      </ul>
+
+      <h3>2. Finalidade do Tratamento</h3>
+      <p>Os dados são utilizados exclusivamente para:</p>
+      <ul>
+        <li>Autenticar o usuário e manter a sessão segura</li>
+        <li>Exibir a localização em tempo real e o histórico de rotas dos veículos da frota</li>
+        <li>Enviar notificações push de eventos (ignição, bloqueio remoto, cerca virtual, velocidade)</li>
+        <li>Processar e verificar o status de assinaturas pagas</li>
+        <li>Prestar suporte técnico ao usuário</li>
+        <li>Melhorar a performance e a experiência do aplicativo</li>
+      </ul>
+
+      <h3>3. Permissões do Dispositivo</h3>
+      <p>O aplicativo solicita as seguintes permissões do dispositivo Android:</p>
+      <ul>
+        <li><strong>Localização precisa (ACCESS_FINE_LOCATION) e aproximada (ACCESS_COARSE_LOCATION):</strong> usadas exclusivamente para exibir o mapa com a posição dos veículos rastreados. Não coletamos nem transmitimos a localização do dispositivo do usuário</li>
+        <li><strong>Notificações (POST_NOTIFICATIONS):</strong> para exibir alertas de eventos dos veículos em tempo real (ignição, bloqueio, cerca virtual, velocidade)</li>
+        <li><strong>Internet (INTERNET):</strong> para comunicação com os servidores do serviço</li>
+        <li><strong>Estado da rede (ACCESS_NETWORK_STATE):</strong> para verificar conectividade antes de requisições ao servidor</li>
+      </ul>
+      <p>Nenhuma permissão é utilizada para fins diferentes dos descritos acima.</p>
+
+      <h3>4. Serviços de Terceiros</h3>
+      <p>O MonitoraNet utiliza os seguintes serviços de terceiros, cada um sujeito à sua própria política de privacidade:</p>
+      <ul>
+        <li><strong>Firebase Cloud Messaging (Google LLC):</strong> para entrega de notificações push. O FCM Token do dispositivo é registrado em nosso servidor para identificar o destinatário das notificações. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Política de privacidade do Firebase</a></li>
+        <li><strong>Google Maps Platform (Google LLC):</strong> para renderização do mapa de rastreamento. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de privacidade do Google</a></li>
+        <li><strong>Mercado Pago (MercadoLibre S.R.L.):</strong> para processamento de pagamentos de assinatura via Checkout Pro. Os dados de pagamento são inseridos diretamente na interface do Mercado Pago; não temos acesso a dados de cartão. <a href="https://www.mercadopago.com.br/privacidade" target="_blank" rel="noopener">Política de privacidade do Mercado Pago</a></li>
+      </ul>
+
+      <h3>5. Compartilhamento de Dados</h3>
+      <p>Não vendemos, alugamos nem compartilhamos seus dados pessoais com terceiros para fins comerciais. Os dados poderão ser compartilhados somente:</p>
+      <ul>
+        <li>Com os provedores de infraestrutura listados na seção 4, estritamente para o funcionamento do serviço</li>
+        <li>Quando exigido por lei ou ordem judicial</li>
+      </ul>
+
+      <h3>6. Armazenamento e Segurança</h3>
+      <p>Os dados são armazenados em servidores com criptografia em trânsito (HTTPS/TLS). Adotamos medidas técnicas e organizacionais adequadas para proteger suas informações contra acesso não autorizado, perda ou destruição. Senhas são armazenadas com hash irreversível.</p>
+
+      <h3>7. Retenção de Dados</h3>
+      <p>Os dados são mantidos enquanto a conta estiver ativa. Após a exclusão da conta, os dados pessoais são removidos dos sistemas ativos em até <strong>30 dias</strong>, exceto quando a retenção for exigida por obrigação legal.</p>
+
+      <h3 id="exclusao-de-dados">8. Exclusão de Conta e Dados</h3>
+      <p>Você pode solicitar a exclusão da sua conta e de todos os dados associados a qualquer momento. Para isso:</p>
+      <div class="deletion-box">
+        <p><strong>Como solicitar a exclusão:</strong> envie um e-mail para <a href="mailto:suporte@monitoranet.com.br">suporte@monitoranet.com.br</a> com o assunto <em>"Exclusão de conta"</em>, informando o e-mail ou identificador da conta. O processamento ocorre em até 30 dias.</p>
+      </div>
+      <p style="margin-top: 0.75rem;">Após a exclusão, todos os dados pessoais (conta, veículos, histórico de rotas e eventos) são removidos permanentemente. Dados de transações financeiras podem ser retidos pelo prazo legal exigido pela legislação fiscal brasileira.</p>
+
+      <h3>9. Direitos do Usuário (LGPD)</h3>
+      <p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você tem direito a:</p>
+      <ul>
+        <li>Confirmar a existência de tratamento de seus dados</li>
+        <li>Acessar, corrigir ou atualizar seus dados</li>
+        <li>Solicitar a exclusão dos dados pessoais (ver seção 8)</li>
+        <li>Revogar o consentimento a qualquer momento</li>
+        <li>Portabilidade dos dados</li>
+        <li>Informação sobre compartilhamento com terceiros</li>
+      </ul>
+
+      <h3>10. Menores de Idade</h3>
+      <p>O MonitoraNet é destinado a pessoas jurídicas e profissionais com 18 anos ou mais. Não coletamos intencionalmente dados de crianças ou adolescentes.</p>
+
+      <h3>11. Alterações nesta Política</h3>
+      <p>Esta política pode ser atualizada periodicamente. Quando houver alterações relevantes, o usuário será notificado pelo aplicativo ou por e-mail. O uso continuado após a publicação das alterações implica na aceitação da nova versão.</p>
+
+      <h3>12. Contato e Encarregado de Dados (DPO)</h3>
+      <p>Para dúvidas, solicitações ou exercício dos seus direitos, entre em contato:</p>
+      <ul>
+        <li><strong>Responsável:</strong> Joaquim Moura</li>
+        <li><strong>E-mail:</strong> <a href="mailto:suporte@monitoranet.com.br">suporte@monitoranet.com.br</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/JoaquimMoura" target="_blank" rel="noopener">github.com/JoaquimMoura</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MonitoraNet</div>
+  <p>Rastreamento veicular em tempo real &nbsp;·&nbsp; <a href="#privacidade">Política de Privacidade</a> &nbsp;·&nbsp; <a href="#exclusao-de-dados">Exclusão de Dados</a></p>
+  <p style="margin-top: 0.5rem;">© 2026 Joaquim Moura. Todos os direitos reservados.</p>
+</footer>
+
 </body>
 </html>
